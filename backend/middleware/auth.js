@@ -2,24 +2,30 @@ const models = require('../controller/session')
 
 module.exports={
     CreateSession:((req,res,user_id,session)=>{
-        models.post(user_id,session)
+        models.Post(user_id,session)
         .then((result)=>{
-            res.cookie("auth",session,{
-                path: '/',
-                expires: new Date(new Date().getTime() + 86400 * 1000),
-                httpOnly: false,
-                auth: false
-            }).send([session,"success",user_id])
+            if(result){
+                res.status(200).cookie("test",session,{
+                    path: '/',
+                    expires: new Date(new Date().getTime() + 86400 * 1000),
+                    httpOnly: false,
+                    test: false
+                }).send([session,"success",user_id])
+            }else{
+                console.log("object")
+            }
+       
         })
         .catch((err)=>{
            res.send(err)
         })
     }),
     VerifySession:(req,res,next)=>{
-        if(req.cookies.auth){
-            models.Get(req.cookies.auth)
+        console.log(req.cookies.test)
+        if(req.cookies.test){
+            models.Get(req.cookies.test)
             .then((result)=>{
-                if(result.length>0&&(result[0].date>Date.now())){
+                if(result.length>0){
                     var registerInfo={
                         user_id:result[0].user_id,
                         session:result[0].session,
