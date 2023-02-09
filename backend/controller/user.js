@@ -6,8 +6,8 @@ const session=require ('../controller/session')
 
 module.exports={
  CreateUser:((req,res)=>{
-  let lastAtPos = req.body.email.lastIndexOf('@');
-      let lastDotPos = req.body.email.lastIndexOf('.');
+    let lastAtPos = req.body.email.lastIndexOf('@');
+    let lastDotPos = req.body.email.lastIndexOf('.');
     let passwordHashed=crypto.createHash('sha256').update(req.body.password, 'utf8').digest('hex')
     let query=`select * from user where email="${req.body.email}"`
      connection.query(query,(error,results)=>{
