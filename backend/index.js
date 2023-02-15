@@ -4,7 +4,6 @@ const port = 3002
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
 const {userRouter}= require('../backend/router/userRouter')
-const {sessionRouter}= require('../backend/router/sessionRouter')
 
 
 
@@ -19,7 +18,6 @@ app.use(cookieParser());
 
 app.use(express.json())
 app.use('/',userRouter)
-app.use('/',sessionRouter)
 
 app.listen(port, ()=>{
     console.log('server is alive')
